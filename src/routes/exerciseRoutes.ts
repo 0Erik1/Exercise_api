@@ -1,9 +1,9 @@
 import {Router} from "express";
-import getExercise from "../controllers/exercises/getExercise.js";
-import getExerciseById from "../controllers/exercises/getExerciseById.js";
-import deleteExercise from "../controllers/exercises/deleteExercise.js";
-import postExercise from "../controllers/exercises/postExercise.js";
-import putExercise from "../controllers/exercises/putExercise.js"
+import getExercise from "../controllers/exercise/getExercise.js";
+import getExerciseById from "../controllers/exercise/getExerciseById.js";
+import deleteExercise from "../controllers/exercise/deleteExercise.js";
+import postExercise from "../controllers/exercise/postExercise.js";
+import putExercise from "../controllers/exercise/putExercise.js"
 
 const router = Router();
 
