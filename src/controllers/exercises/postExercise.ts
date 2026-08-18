@@ -1,7 +1,7 @@
 import {prisma} from "../../prisma.js";
 import type { Response, Request } from "express";
 
-export async function postExercise(req:Request, res:Response) {
+export default async function postExercise(req:Request, res:Response) {
     const {id,name,force,level,category,equipment,primaryMuscles,mechanic,secondaryMuscles,instructions} = req.body;
     
     if(id && name){
