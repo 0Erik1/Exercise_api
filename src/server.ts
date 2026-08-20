@@ -1,5 +1,6 @@
 import express from "express";
 import exerciseRoutes from "./routes/exerciseRoutes.js"
+import userRoutes from "./routes/userRoutes.js"
 
 const app = express();
 
@@ -10,6 +11,7 @@ app.get("/", (req, res) =>{
 });
 
 app.use("/exercise", exerciseRoutes);
+app.use("/user", userRoutes);
 
 app.listen(8000, ()=> {
     console.log("Started");
