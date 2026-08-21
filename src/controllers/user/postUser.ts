@@ -6,15 +6,18 @@ export default async function postUser(req:Request, res:Response){
 
     try{
         if(name && email && password){
-        await prisma.user.create({
-            data:{
-                name,
-                email,
-                password
-            }
-        })
+            await prisma.user.create({
+                data:{
+                    name,
+                    email,
+                    password
+                }
+            })
+            res.status(201).send();
         }
-        res.status(204).send();
+        else{
+            res.status(400).send();
+        }
     }
     catch{
         //fazer tratamento de erro depois
