@@ -9,8 +9,8 @@ const router = Router();
 
 router.get("/", getExercise);
 router.get("/:id", getExerciseById);
-router.delete("/",deleteExercise);
+router.delete("/:id",deleteExercise);
 router.post("/", postExercise);
-router.put("/", putExercise);
+router.put("/:id", putExercise);
 
 export default router;

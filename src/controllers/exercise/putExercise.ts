@@ -1,14 +1,13 @@
 import {prisma} from "../../prisma.js";
 import type { Response, Request } from "express";
 
-export default async function putExercise(req:Request, res:Response) {
-    const {id,name,force,level,category,equipment,primaryMuscles,mechanic,secondaryMuscles,instructions} = req.body;
+export default async function putExercise(req:Request<{id:string}>, res:Response) {
+    const id = req.params.id;
+    const {name,force,level,category,equipment,primaryMuscles,mechanic,secondaryMuscles,instructions} = req.body;
     try{
-        if(id){
-            await prisma.exercise.update({
-                where: {id:id},
+          await prisma.exercise.update({
+                where: {id},
                 data: {
-                    id,
                     name,
                     force,
                     level,
@@ -20,9 +19,7 @@ export default async function putExercise(req:Request, res:Response) {
                     instructions
                 }
             });
-        }
-        res.status(200).send();
-        
+        res.status(200).send(); 
     }
     catch(error){
         console.log(error);

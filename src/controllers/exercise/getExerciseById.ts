@@ -1,15 +1,18 @@
 import {prisma} from "../../prisma.js";
 import type {Request, Response} from "express";
 
-export default async function getExerciseById(req:Request, res:Response) {
+export default async function getExerciseById(req:Request<{id:string}>, res:Response) {
     const {id} = req.params;
-    if(id){
-        const idStr = id.toString().trim();
+
+    try{
         const exercise = await prisma.exercise.findUnique({
             where: {
-                id : idStr
+                id
             }
         })
         res.json(exercise);
     }
+    catch{
+        //fazer tratamento de erro depois
+    }      
 }

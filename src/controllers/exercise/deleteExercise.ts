@@ -1,8 +1,8 @@
 import {prisma} from "../../prisma.js";
 import type { Request, Response } from "express";
 
-export default async function deletExercise(req:Request, res:Response) {
-    const {id} = req.body;
+export default async function deletExercise(req:Request<{id:string}>, res:Response) {
+    const {id} = req.params;
     //id de administrador para poder apagar os exercicios
 
     if(id){
