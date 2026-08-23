@@ -6,9 +6,7 @@ export default async function getExerciseById(req:Request<{id:string}>, res:Resp
 
     try{
         const exercise = await prisma.exercise.findUnique({
-            where: {
-                id
-            }
+            where: {id}
         })
         res.json(exercise);
     }
