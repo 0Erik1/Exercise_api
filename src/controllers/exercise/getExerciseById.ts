@@ -10,7 +10,9 @@ export default async function getExerciseById(req:Request<{id:string}>, res:Resp
         })
         res.json(exercise);
     }
-    catch{
+    catch(error){
         //fazer tratamento de erro depois
+        res.status(400).send();
+        console.log(error)
     }      
 }
