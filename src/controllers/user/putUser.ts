@@ -1,9 +1,12 @@
 import {prisma} from "../../prisma.js";
 import type { Request, Response } from "express";
+import bcrypt from 'bcrypt';
 
 export default async function putUser(req:Request<{id:string}>, res:Response) {
     const {id} = req.params;
     const {name,email,password} = req.body;
+    const passwordHash = await bcrypt.hash(password, 10);
+
 
     try{
         await prisma.user.update({
@@ -11,7 +14,7 @@ export default async function putUser(req:Request<{id:string}>, res:Response) {
             data:{
                     name,
                     email,
-                    password
+                    password:passwordHash
                 }
         })
         res.status(200).send();
