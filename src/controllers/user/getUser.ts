@@ -1,8 +1,9 @@
 import {prisma} from "../../prisma.js";
-import type {Request, Response} from "express";
+import type {Response} from "express";
+import type { authRequest } from "../../middlewares/authMiddleware.js";
 
-export default async function getUser(req:Request<{id:string}>, res:Response) {
-    const {id} = req.params;
+export default async function getUser(req:authRequest, res:Response) {
+    const id = req.userId;
 
     try{
         const user = await prisma.user.findUnique({
