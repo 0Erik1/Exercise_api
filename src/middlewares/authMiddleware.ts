@@ -20,7 +20,7 @@ export default async function authMiddleware(req:authRequest, res:Response, next
 
         const decoded = jwt.verify(token, secret) as { id: string }
         Object.assign(req, {userId:decoded.id})
-        console.log("antes do next", req.userId)
+
         return next();
     }catch(error){
         return res.status(401).json({ message: "Token inválido." });
