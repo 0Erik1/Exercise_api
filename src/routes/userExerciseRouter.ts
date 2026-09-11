@@ -1,5 +1,5 @@
 import { Router } from "express";
-import postUserExercise from "../controllers/userExercise/postUserExrecise.js";
+import postUserExercise from "../controllers/userExercise/postUserExercise.js";
 import authMiddleware from "../middlewares/authMiddleware.js";
 import getUserExercise from "../controllers/userExercise/getUserExercise.js";
 
