@@ -8,7 +8,7 @@ export default async function getUserExercise( req:authRequest, res:Response){
     try{
         const exrcises = await prisma.userExercise.findMany({
             where:{userId},
-            include:{exercise:true, exerciseSet:true},
+            include:{exerciseSet:true},
             orderBy:{dateTime:"desc"}
         })
         res.status(200).json(exrcises);
