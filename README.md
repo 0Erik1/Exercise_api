@@ -1,6 +1,6 @@
-# 🏋️ Workout Tracker API
+# 🏋️ Exercise_api
 
-API RESTful desenvolvida em Node.js, Express e TypeScript para gerenciamento de treinos, catálogo de exercícios e acompanhamento de séries dos usuários. Utiliza Prisma ORM para persistência de dados e autenticação via JSON Web Token (JWT).
+API RESTful desenvolvida em Node.js, Express e TypeScript para gerenciamento e acompanhamento de treinos personalizados, catálogo de exercícios e histórico de séries dos usuários. Utiliza Prisma ORM para persistência de dados e autenticação via JSON Web Token (JWT).
 
 ---
 
@@ -40,10 +40,13 @@ prisma/
 
 ## 🗄️ Modelagem do Banco de Dados
 
-- **`User`**: Armazena as credenciais e dados dos usuários.
-- **`Exercise`**: Catálogo global de exercícios cadastrados.
+- **`User`**: Armazena credenciais e dados cadastrais dos usuários.
+- **`Exercise`**: Catálogo global de exercícios disponíveis na aplicação.
 - **`UserExercise`**: Sessão de treino vinculada a um usuário (`userId`) e a um exercício (`exerciseId`).
 - **`ExerciseSet`**: Séries associadas a uma sessão de treino (`userExerciseId`), contendo repetições, carga (peso) e tempo de descanso.
+
+> **Créditos da Base de Dados:**  
+> O catálogo inicial de exercícios utilizado no arquivo de *seed* foi obtido a partir da base em português disponibilizada no repositório [exercicios-bd-ptbr](https://github.com/gugeldev/exercicios-bd-ptbr).
 
 ---
 
@@ -140,8 +143,8 @@ Authorization: Bearer <seu_token_jwt>
 
 1. **Clonar o repositório:**
    ```bash
-   git clone [https://github.com/0Erik1/NOME_DO_REPOSITORIO.git](https://github.com/0Erik1/NOME_DO_REPOSITORIO.git)
-   cd NOME_DO_REPOSITORIO
+   git clone [https://github.com/0Erik1/Exercise_api.git](https://github.com/0Erik1/Exercise_api.git)
+   cd Exercise_api
    ```
 
 2. **Instalar as dependências:**
@@ -150,14 +153,14 @@ Authorization: Bearer <seu_token_jwt>
    ```
 
 3. **Configurar variáveis de ambiente:**
-   Crie um arquivo `.env` na raiz do projeto:
+   Crie um arquivo `.env` na raiz do projeto com suas credenciais:
    ```env
    DATABASE_URL="postgresql://usuario:senha@localhost:5432/workout_db?schema=public"
    JWT_SECRET="sua_chave_secreta_jwt"
    PORT=8000
    ```
 
-4. **Rodar as migrações do banco e popular dados:**
+4. **Executar as migrações do banco e popular dados de exercícios:**
    ```bash
    npx prisma migrate dev
    npx prisma db seed
@@ -165,5 +168,5 @@ Authorization: Bearer <seu_token_jwt>
 
 5. **Iniciar a aplicação:**
    ```bash
-   npm run dev
+   npm run start
    ```
