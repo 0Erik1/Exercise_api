@@ -20,15 +20,15 @@ API RESTful desenvolvida em Node.js, Express e TypeScript para gerenciamento e a
 ```text
 src/
  ├── controllers/
- │    ├── user/            # Autenticação e cadastro de usuários
- │    ├── exercise/        # Consulta ao catálogo de exercícios
- │    └── userExercise/    # CRUD de treinos (POST, GET, PUT, DELETE)
+ │    ├── user/            # Cadastro, login, perfil e exclusão de conta
+ │    ├── exercise/        # CRUD completo do catálogo de exercícios
+ │    └── userExercise/    # CRUD completo de treinos (POST, GET, PUT, DELETE)
  ├── middlewares/
  │    └── authMiddleware.ts # Validação e extração do token JWT
  ├── routes/
- │    ├── userRoutes.ts
- │    ├── exerciseRoutes.ts
- │    └── userExerciseRouter.ts
+ │    ├── userRoutes.ts     # Rotas /user
+ │    ├── exerciseRoutes.ts # Rotas /exercise
+ │    └── userExerciseRouter.ts # Rotas /user-exercise
  ├── prisma.js
  └── server.ts
 prisma/
@@ -62,27 +62,44 @@ Authorization: Bearer <seu_token_jwt>
 
 ## 📌 Endpoints da API
 
-### 👥 Usuários (`/users`)
+### 👥 Usuários (`/user`)
 
 | Método | Rota | Autenticado | Descrição |
 | :--- | :--- | :--- | :--- |
-| `POST` | `/users/register` | ❌ | Cadastro de novo usuário. |
-| `POST` | `/users/login` | ❌ | Autenticação do usuário e geração de token JWT. |
+| `POST` | `/user` | ❌ | Cadastro de novo usuário. |
+| `POST` | `/user/login` | ❌ | Autenticação e geração de token JWT. |
+| `GET` | `/user/me` | ✅ | Retorna os dados do perfil do usuário logado. |
+| `PUT` | `/user/me` | ✅ | Atualiza as informações do perfil do usuário. |
+| `DELETE` | `/user/me` | ✅ | Remove a conta do usuário do sistema. |
 
 ---
 
-### 🏋️ Exercícios (`/exercises`)
+### 🏋️ Catálogo de Exercícios (`/exercise`)
 
 | Método | Rota | Autenticado | Descrição |
 | :--- | :--- | :--- | :--- |
-| `GET` | `/exercises` | 🔄 | Lista o catálogo de exercícios disponíveis. |
+| `GET` | `/exercise` | ❌ | Lista todo o catálogo de exercícios disponíveis. |
+| `GET` | `/exercise/:id` | ❌ | Retorna os detalhes de um exercício específico por ID. |
+| `POST` | `/exercise` | ❌ / ✅ | Adiciona um novo exercício ao catálogo global. |
+| `PUT` | `/exercise/:id` | ❌ / ✅ | Atualiza as informações de um exercício no catálogo. |
+| `DELETE` | `/exercise/:id` | ❌ / ✅ | Remove um exercício do catálogo global. |
 
 ---
 
 ### 📊 Histórico e Treinos (`/user-exercise`)
 
-#### 1. Registrar Treino
-- **`POST /user-exercise`** *(Autenticado)*
+| Método | Rota | Autenticado | Descrição |
+| :--- | :--- | :--- | :--- |
+| `POST` | `/user-exercise` | ✅ | Registra um novo treino com suas séries. |
+| `GET` | `/user-exercise` | ✅ | Listagem completa do histórico de treinos do usuário. |
+| `PUT` | `/user-exercise/:id` | ✅ | Atualiza o exercício ou substitui as séries de um treino. |
+| `DELETE` | `/user-exercise/:id` | ✅ | Remove um registro de treino e todas as suas séries associadas. |
+
+---
+
+#### Detalhamento das Requisições (`/user-exercise`)
+
+##### 1. Criar Treino (`POST /user-exercise`)
 - **Body (`req.body`):**
   ```json
   {
@@ -94,8 +111,7 @@ Authorization: Bearer <seu_token_jwt>
   }
   ```
 
-#### 2. Listar Treinos do Usuário
-- **`GET /user-exercise`** *(Autenticado)*
+##### 2. Listar Treinos (`GET /user-exercise`)
 - **Resposta (`200 OK`):**
   ```json
   [
@@ -116,8 +132,7 @@ Authorization: Bearer <seu_token_jwt>
   ]
   ```
 
-#### 3. Atualizar Treino
-- **`PUT /user-exercise/:id`** *(Autenticado)*
+##### 3. Atualizar Treino (`PUT /user-exercise/:id`)
 - **Body (`req.body`):**
   ```json
   {
@@ -128,8 +143,7 @@ Authorization: Bearer <seu_token_jwt>
   }
   ```
 
-#### 4. Remover Treino
-- **`DELETE /user-exercise/:id`** *(Autenticado)*
+##### 4. Deletar Treino (`DELETE /user-exercise/:id`)
 - **Resposta (`200 OK`):**
   ```json
   {
@@ -153,7 +167,7 @@ Authorization: Bearer <seu_token_jwt>
    ```
 
 3. **Configurar variáveis de ambiente:**
-   Crie um arquivo `.env` na raiz do projeto com suas credenciais:
+   Crie um arquivo `.env` na raiz do projeto:
    ```env
    DATABASE_URL="postgresql://usuario:senha@localhost:5432/workout_db?schema=public"
    JWT_SECRET="sua_chave_secreta_jwt"
