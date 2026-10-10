@@ -83,6 +83,7 @@ Authorization: Bearer <seu_token_jwt>
 | `POST` | `/exercise` | ❌ | Adiciona um novo exercício ao catálogo global. |
 | `PUT` | `/exercise/:id` | ❌ | Atualiza as informações de um exercício no catálogo. |
 | `DELETE` | `/exercise/:id` | ❌ | Remove um exercício do catálogo global. |
+> **\*Nota:** Na v1.0, as rotas de alteração do catálogo estão abertas para facilitar testes, mas serão restritas a contas com perfil de Administrador (RBAC) nas próximas versões.
 
 ---
 
@@ -94,7 +95,6 @@ Authorization: Bearer <seu_token_jwt>
 | `GET` | `/user-exercise` | ✅ | Listagem completa do histórico de treinos do usuário. |
 | `PUT` | `/user-exercise/:id` | ✅ | Atualiza o exercício ou substitui as séries de um treino. |
 | `DELETE` | `/user-exercise/:id` | ✅ | Remove um registro de treino e todas as suas séries associadas. |
-> **\*Nota:** Na v1.0, as rotas de alteração do catálogo estão abertas para facilitar testes, mas serão restritas a contas com perfil de Administrador (RBAC) nas próximas versões.
 
 ---
 
