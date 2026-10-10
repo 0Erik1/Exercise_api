@@ -185,3 +185,9 @@ Authorization: Bearer <seu_token_jwt>
    ```bash
    npm run start
    ```
+## 🔮 Próximos Passos (Roadmap)
+
+- [ ] Implementar middleware global para tratamento de erros (`Error Handler`).
+- [ ] Adicionar validação de dados de entrada com **Zod** nos corpos das requisições (`req.body`).
+- [ ] Aplicar restrição de acesso por função (RBAC) para garantir que apenas administradores modifiquem o catálogo `/exercise`.
+- [ ] Criar suíte de testes de integração com **Vitest** e **Supertest**.
