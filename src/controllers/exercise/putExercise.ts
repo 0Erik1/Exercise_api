@@ -21,8 +21,15 @@ export default async function putExercise(req:Request<{id:string}>, res:Response
             });
         res.status(200).send(); 
     }
-    catch(error){
-        console.log(error);
-        //fazer tratamento de erro depois
+    catch (error: any) {
+        console.error("Erro ao atualizar exercício:", error);
+
+        // P2025 do Prisma = Registro não encontrado para atualização
+        if (error.code === 'P2025') {
+            return res.status(404).json({ message: "Exercício não encontrado." });
+        }
+
+        // Erro genérico no banco ou servidor
+        return res.status(500).json({ message: "Erro interno ao atualizar o exercício." });
     }
 }

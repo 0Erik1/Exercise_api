@@ -7,12 +7,17 @@ export default async function getExerciseById(req:Request<{id:string}>, res:Resp
     try{
         const exercise = await prisma.exercise.findUnique({
             where: {id}
-        })
+        });
+
+        if (!exercise) {
+            return res.status(404).json({ message: "Exercício não encontrado." });
+        }
+
         res.json(exercise);
     }
     catch(error){
-        //fazer tratamento de erro depois
-        res.status(400).send();
-        console.log(error)
+        console.error("Erro ao buscar exercício por ID: ", error);
+        
+        return res.status(500).json({ message: "Erro interno no servidor." });
     }      
 }

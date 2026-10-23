@@ -14,7 +14,14 @@ export default async function putUserExercise(req: authRequest, res: Response) {
     const { exerciseId, sets }: { exerciseId?: string; sets?: ExerciseSetInput[] } = req.body;
 
     if (!userId || !id) {
-        return res.status(400).json({ message: "ID do registro não fornecido." });
+        return res.status(400).json({ message: "ID do registro não fornecido ou usuário não autenticado." });
+    }
+
+    const hasValidSets = Array.isArray(sets) && sets.length > 0;
+    if (!exerciseId && !hasValidSets) {
+        return res.status(400).json({ 
+            message: "Informe ao menos 'exerciseId' ou um array 'sets' com dados para atualizar." 
+        });
     }
 
     try {
@@ -29,7 +36,6 @@ export default async function putUserExercise(req: authRequest, res: Response) {
             return res.status(404).json({ message: "Registro de treino não encontrado." });
         }
 
-        // 2. Se as séries foram enviadas, atualizamos dentro de uma transação
         if (sets && Array.isArray(sets)) {
             await prisma.$transaction([
 
@@ -57,8 +63,14 @@ export default async function putUserExercise(req: authRequest, res: Response) {
 
         return res.status(200).json({ message: "Treino atualizado com sucesso." });
 
-    } catch (error) {
-        return res.status(500).json({ message: "Erro ao atualizar registro de treino." });
+    } catch (error: any) {
+        console.error("Erro ao atualizar registro de treino: ", error);
 
+        // P2003 do Prisma = O exerciseId informado não existe na tabela de exercícios
+        if (error.code === 'P2003') {
+            return res.status(404).json({ message: "O exercício informado não foi encontrado no catálogo." });
+        }
+
+        return res.status(500).json({ message: "Erro interno no servidor ao atualizar treino." });
     }
 }

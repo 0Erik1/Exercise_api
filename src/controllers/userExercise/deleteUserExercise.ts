@@ -25,9 +25,10 @@ export default async function deleteUserExercise(req: authRequest, res:Response)
                 where: { id }
             })
         ]);
-        return res.status(200).json({ message: "Treino removido com sucesso." });
+        return res.status(204).send();
     }catch (error) {
-        // Bloco catch obrigatório para tratar falhas e fechar a requisição
-        return res.status(500).json({ message: "Erro ao deletar treino." });
+        console.error("Erro ao deletar registro de treino: ", error);
+
+        return res.status(500).json({ message: "Erro interno no servidor ao deletar treino." });
     }
 }   

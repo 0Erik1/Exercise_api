@@ -12,9 +12,14 @@ export default async function deleteExercise(req:Request<{id:string}>, res:Respo
             });
             res.status(204).send();
         }
-        catch(error){
-            //fazer tratamento de erro depois
-            console.log("Erro ao deletar: ", error);
+        catch (error: any) {
+        console.log("Erro ao deletar: ", error);
+
+        if (error.code === 'P2025') {
+            return res.status(404).json({ message: "Exercício não encontrado." });
         }
+
+        return res.status(500).json({ message: "Erro interno ao deletar o exercício." });
+    }
 }
     
