@@ -4,13 +4,15 @@ import getExerciseById from "../controllers/exercise/getExerciseById.js";
 import deleteExercise from "../controllers/exercise/deleteExercise.js";
 import postExercise from "../controllers/exercise/postExercise.js";
 import putExercise from "../controllers/exercise/putExercise.js";
+import authMiddleware from "../middlewares/authMiddleware.js";
+import adminMiddleware from "../middlewares/adminMiddleware.js";
 
 const router = Router();
 
 router.get("/", getExercise);
 router.get("/:id", getExerciseById);
-router.delete("/:id",deleteExercise);
-router.post("/", postExercise);
-router.put("/:id", putExercise);
+router.delete("/:id",authMiddleware,adminMiddleware,deleteExercise);
+router.post("/",authMiddleware,adminMiddleware, postExercise);
+router.put("/:id",authMiddleware, putExercise);
 
 export default router;
