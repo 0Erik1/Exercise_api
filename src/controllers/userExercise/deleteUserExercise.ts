@@ -25,7 +25,7 @@ export default async function deleteUserExercise(req: authRequest, res:Response)
                 where: { id }
             })
         ]);
-        return res.status(204).send();
+        return res.status(204).json({message: "Treino removido com sucesso."});
     }catch (error) {
         console.error("Erro ao deletar registro de treino: ", error);
 

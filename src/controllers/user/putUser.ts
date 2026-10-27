@@ -4,7 +4,6 @@ import type { authRequest } from "../../middlewares/authMiddleware.js";
 import bcrypt from 'bcrypt';
 
 export default async function putUser(req:authRequest, res:Response) {
-    console.log("1");
     const id = req.userId;
     const {name,email,password} = req.body;
 
