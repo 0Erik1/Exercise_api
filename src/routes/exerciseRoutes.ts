@@ -13,6 +13,6 @@ router.get("/", getExercise);
 router.get("/:id", getExerciseById);
 router.delete("/:id",authMiddleware,adminMiddleware,deleteExercise);
 router.post("/",authMiddleware,adminMiddleware, postExercise);
-router.put("/:id",authMiddleware, putExercise);
+router.put("/:id",authMiddleware,adminMiddleware, putExercise);
 
 export default router;
